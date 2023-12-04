@@ -13,8 +13,6 @@ def get_value(line):
     n_matching = len(set(winning).intersection(nums))
     
     return 2 ** (n_matching - 1) if n_matching > 0 else 0, n_matching
-    # else:
-        
 
 results = [get_value(line) for line in lines]
 
