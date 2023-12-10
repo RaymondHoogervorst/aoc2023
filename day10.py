@@ -16,7 +16,7 @@ OPPOSITE = {
     'S' : 'N',
 }
 
-lines = list(map(str.strip, fileinput.input()))
+lines = list(map(list, map(str.strip, fileinput.input())))
 
 
 # find S coords
@@ -34,7 +34,7 @@ def step(y, x, dir):
     return y, x
 
 def replace(y, x, c):
-    lines[y] = lines[y][:x] + c + lines[y][x+1:]
+    lines[y][x] = c
 
 def traverse(y, x, dir):
 
@@ -65,20 +65,24 @@ def traverse(y, x, dir):
             replace(y, x, key)
             break
 
+    length = len(route)
+    route = set(route)
     for x in range(len(lines[0])):
         for y in range(len(lines)):
             if (y, x) not in route:
                 replace(y, x, '.')
 
-    return route
+    return length
 
 for dir in 'ESWN':
     y, x = step(sy, sx, dir)
-    if route := traverse(y, x, dir):
+    length = traverse(y, x, dir)
+    if length is not False:
         break
 
+
 # Part 1 - Distance to furthest point of loop
-print(len(route) // 2)
+print(length // 2)
 
 # Part 2 - Area enclosed by loop
 
